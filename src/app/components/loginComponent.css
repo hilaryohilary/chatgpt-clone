@@ -1,0 +1,38 @@
+.input-container {
+    position: relative;
+    height: 56px;
+}
+
+label {
+    display: block;
+    position: absolute;
+    top: 50%;
+    transform: translate(15%, -50%);
+    transition: .2s ease-in-out;
+}
+
+/* input:focus+label, input:valid+label {
+    transform: translate(10%, -175%);
+    color: #10A37F;
+} */
+.float {
+    transform: translate(10%, -175%);
+    color: #10A37F;
+}
+
+.return {
+    transform: translate(15%, -50%);
+}
+
+.error {
+    border: 1px red solid;
+}
+
+.labelerror {
+    color: red;
+}
+
+input:focus ~ label {
+    transform: translate(10%, -175%);
+    color: #10A37F;
+}
