@@ -17,22 +17,30 @@ label {
 } */
 .float {
     transform: translate(10%, -175%);
-    color: #10A37F;
 }
 
 .return {
     transform: translate(15%, -50%);
 }
 
-.error {
-    border: 1px red solid;
-}
-
-.labelerror {
-    color: red;
-}
-
 input:focus ~ label {
     transform: translate(10%, -175%);
+}
+
+input:focus+.valid {
     color: #10A37F;
 }
+
+input:focus+.invalid {
+    color: #D00E17;
+}
+
+input+.invalid {
+    color: #D00E17;
+    transform: translate(10%, -175%);
+}
+
+#password:focus ~ label {
+    color: #10A37F;
+}
+
