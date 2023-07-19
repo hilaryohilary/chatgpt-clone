@@ -1,16 +1,15 @@
 "use client";
-
-import Image from "next/image";
 import { useState } from "react";
-import {  BsSun } from "react-icons/bs";
+import { BsSun } from "react-icons/bs";
 import SidebarComponent from "./components/SidebarComponent";
+import FloatingInputComponent from "./components/FloatingInputComponent";
 
 export default function Home() {
   const [openSideBar, setopenSideBar] = useState(false);
 
-  const handleSidebarOpen = (value:boolean) => {
+  const handleSidebarOpen = (value: boolean) => {
     setopenSideBar(value);
-  }
+  };
   return (
     <div>
       <SidebarComponent onSideBarOpen={handleSidebarOpen} />
@@ -110,6 +109,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <FloatingInputComponent sideBarOpened={openSideBar} />
     </div>
   );
 }
