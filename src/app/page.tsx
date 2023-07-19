@@ -2,84 +2,26 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { BsPlus, BsSun } from "react-icons/bs";
-import { FiMessageSquare } from "react-icons/fi";
-import { IoPersonOutline } from "react-icons/io5";
-import { LiaEllipsisHSolid } from "react-icons/lia";
+import {  BsSun } from "react-icons/bs";
+import SidebarComponent from "./components/SidebarComponent";
 
 export default function Home() {
-  const [openSidebar, setOpenSidebar] = useState(true);
+  const [openSideBar, setopenSideBar] = useState(false);
+
+  const handleSidebarOpen = (value:boolean) => {
+    setopenSideBar(value);
+  }
   return (
-    <div className="flex flex-row">
-      <div className="">
-        <nav className=" top-0 right-0 left-0 bottom-0 h-screen overflow-y-auto w-[250px] bg-gray-900 p-2 text-white transition ease-in-out">
-          <div className="flex flex-row items-center text-center justify-between left-0 right-0">
-            <a className="border-white/20 border p-2 w-[180px] gap-2 text-sm rounded-md flex flex-row items-center cursor-pointer duration-200 hover:bg-background-focus-dark">
-              <BsPlus size={16} /> <span>New Chat</span>
-            </a>
+    <div>
+      <SidebarComponent onSideBarOpen={handleSidebarOpen} />
 
-            <button
-              onClick={() => setOpenSidebar(!openSidebar)}
-              className="ml-auto p-2.5 rounded border border-white/20  hover:bg-background-focus-dark duration-200"
-            >
-              <Image src="/window.svg" alt="menu" height={16} width={16} />
-            </button>
-          </div>
-
-          <div className="relative">
-            <div className="sticky top-0 z-[16]">
-              <h3 className=" h-9 pb-2 pt-3 px-3 text-xs text-gray-500 font-medium text-ellipsis overflow-hidden break-all bg-gray-900">
-                Yesterday
-              </h3>
-            </div>
-            <ol>
-              <li className="relative z-[15]">
-                <a
-                  href=""
-                  className="flex flex-row items-start py-3 px-3 gap-3 relative rounded-md hover:bg-[#2A2B32] cursor-pointer break-all hover:pr-4 text-sm"
-                >
-                  <FiMessageSquare size={25} />
-                  <div className="flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative">
-                    Best React UI Libraries libraryy outcome
-                    <div className="absolute inset-y-0 right-0 w-8 z-10 bg-gradient-to-l from-gray-900 group-hover:from-[#2A2B32]"></div>
-                  </div>
-                </a>
-              </li>
-            </ol>
-          </div>
-          <div className="fixed bottom-0 flex flex-col border-t-[1px] border-gray-500 w-[230px]">
-            <a
-              href=""
-              className="flex flex-row items-center py-3 px-3 gap-3 relative rounded-md hover:bg-[#2A2B32] cursor-pointer break-all hover:pr-4 text-sm mt-2"
-            >
-              <IoPersonOutline size={16} />
-              <div className="flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative">
-                Upgrade to Plus
-              </div>
-              <span className=" rounded-md bg-orange-300 text-black p-1">
-                NEW
-              </span>
-            </a>
-
-            <a
-              href=""
-              className="flex flex-row items-center py-3 px-3 gap-3 relative rounded-md hover:bg-[#2A2B32] cursor-pointer break-all hover:pr-4 text-sm group"
-            >
-              <h3 className="py-1 px-2 rounded bg-gray-700">H</h3>
-              <div className="flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative">
-                Hilary Ogochukwu
-              </div>
-              <LiaEllipsisHSolid size={16} />
-            </a>
-          </div>
-        </nav>
-      </div>
-      {/* <button onClick={() => setOpenSidebar(!openSidebar)} className="fixed mt-2 ml-2 p-3 rounded border border-black/20 hover:bg-gray-lightest duration-200">
-          <Image src="/window-dark.svg" alt="menu" height={16} width={16} />
-        </button> */}
-      <div className=" relative flex flex-col text-sm dark:bg-gray-800 justify-center w-full">
+      <div
+        className={`${
+          openSideBar ? "md:pl-[250px]" : "md:pl-0"
+        } relative flex flex-col text-sm dark:bg-gray-800 justify-center w-full`}
+      >
         <div className="text-gray-800 w-full mx-auto md:mx-w-2xl lg:max-w-3xl md:h-full md:flex md:flex-col px-6 dark:text-gray-100">
-          <h1 className="text-4xl font-semibold text-center mt-6 sm:mt-[20vh] ml-auto mr-auto mb-10 sm:mb-16 flex gap-2 items-center justify-center">
+          <h1 className="text-4xl font-semibold text-center mt-6 sm:mt-[10vh] ml-auto mr-auto mb-10 sm:mb-16 flex gap-2 items-center justify-center">
             ChatGPT Clone
           </h1>
           <div className="md:flex items-start text-center gap-3.5">
@@ -165,8 +107,6 @@ export default function Home() {
                 </li>
               </ul>
             </div>
-
-          
           </div>
         </div>
       </div>
