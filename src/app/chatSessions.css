@@ -1,0 +1,7 @@
+div #sessions:nth-of-type(even) {
+    background-color: green;
+}
+
+div #sessions {
+    background-color: black !important;
+}

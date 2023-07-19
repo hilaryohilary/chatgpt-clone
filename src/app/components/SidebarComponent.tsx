@@ -29,7 +29,7 @@ const SidebarComponent:React.FC<SidebarComponentProps> = ({onSideBarOpen}) => {
           <IoAdd size={24} onClick={() => {}} className="cursor-pointer" />
         </nav>
         <nav
-          className={`absolute top-0 right-0 left-0 bottom-0 h-screen overflow-y-auto md:w-[250px] w-[320px] bg-gray-900 p-2 text-white transition ease-in-out z-20 ${
+          className={`fixed top-0 right-0 left-0 bottom-0 h-screen overflow-y-auto md:w-[250px] w-[320px] bg-gray-900 p-2 text-white transition ease-in-out z-20 ${
             openSidebar ? "md:translate-x-0" : "md:translate-x-[-250px]"
           } ${
             openMobileSidebar === true
@@ -115,7 +115,7 @@ const SidebarComponent:React.FC<SidebarComponentProps> = ({onSideBarOpen}) => {
         )}
         <button
           onClick={() => setOpenSidebar(!openSidebar)}
-          className=" hidden md:block sticky mt-2 ml-2 p-3 rounded border border-black/20 hover:bg-gray-lightest duration-200 cursor-pointer group"
+          className={`hidden ${!openSidebar ? 'md:block': ''} fixed mt-2 ml-2 p-3 rounded border border-black/20 hover:bg-gray-lightest duration-200 cursor-pointer group`}
         >
           <Image src="/window-dark.svg" alt="menu" height={16} width={16} />
         </button>

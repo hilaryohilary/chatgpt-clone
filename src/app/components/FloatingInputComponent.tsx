@@ -1,13 +1,77 @@
-import React from 'react';
+import React, { useState } from "react";
+import { IoSend } from "react-icons/io5";
+import { BsStop } from "react-icons/bs";
+import { BiRefresh } from "react-icons/bi";
 
 type FloatingInputComponentProps = {
-    sideBarOpened: boolean;
+  sideBarOpened: boolean;
 };
 
-const FloatingInputComponent:React.FC<FloatingInputComponentProps> = ({sideBarOpened}) => {
-    
-    return <div className={`absolute ${sideBarOpened ? 'md:pl-[250px]' : ''} bottom-0 mb-2 text-dark`}>
-        <p className=''>Hello</p>
+const FloatingInputComponent: React.FC<FloatingInputComponentProps> = ({
+  sideBarOpened,
+}) => {
+  const [inputPresent, setinputPresent] = useState(false);
+  const handleInputPrompt = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    e.target.value ? setinputPresent(true) : setinputPresent(false);
+  };
+  return (
+    <div
+      className={`fixed ${
+        sideBarOpened ? "md:pl-[250px]" : ""
+      } bottom-0 text-dark w-screen`}
+    >
+      {/* <button className="p-2 border border-black/10 rounded mx-auto flex items-center mb-2 text-gray-700 gap-2 group text-sm hover:bg-gray-lightest">
+        <BsStop size={16} className=" animate-spin" />
+        <span>Stop generating</span>
+      </button>
+      <button className="p-2 border border-black/10 rounded mx-auto flex items-center mb-2 text-gray-700 gap-2 group text-sm hover:bg-gray-lightest ">
+        <BiRefresh
+          size={16}
+          className="group-active:animate-spin"
+        />
+        <span>Regenerate response</span>
+      </button> */}
+      <form className="flex flex-col w-full py-[10px] flex-grow md:py-4 md:pl-4 relative border border-black/10 bg-white dark:border-gray-900/50 dark:text-white dark:bg-gray-700 rounded-xl shadow-xs dark:shadow-xs px-2">
+        <div
+          className="relative flex h-full flex-1 items-stretch md:flex-col"
+          role="presentation"
+        >
+          <div className="flex flex-col w-full py-[10px] md:py-4 md:pl-4 relative border border-black/10 bg-white dark:border-gray-900/50 dark:text-white dark:bg-gray-700 rounded-xl shadow-xs dark:shadow-xs md:w-4/5 mx-auto">
+            <textarea
+              onChange={handleInputPrompt}
+              id="prompt-textarea"
+              tabIndex={0}
+              data-id="root"
+              rows={1}
+              placeholder="Send a message"
+              className="m-0 w-full resize-none outline-none border-0 bg-transparent p-0 pr-10 focus:ring-0 focus-visible:ring-0 dark:bg-transparent md:pr-12 pl-3 md:pl-0 h-6 overflow-y-hidden max-h-[200px] "
+            ></textarea>
+            <button
+              className={`absolute rounded-md md:bottom-3 p-1 md:p-1 md:right-3 dark:hover:bg-gray-900 dark:disabled:hover:bg-transparent right-2 disabled:text-gray-400 enabled:bg-brand-purple text-white bottom-1.5 transition-colors disabled:opacity-40 ${
+                inputPresent ? "bg-[#19C37D]" : ""
+              }`}
+              disabled={!inputPresent}
+            >
+              <span className="">
+                <IoSend size={20} />
+              </span>
+            </button>
+          </div>
+        </div>
+        <span className="mx-auto mt-2 text-[12px] text-gray-900 text-center">
+          Free Research Preview. ChatGPT may produce inaccurate information
+          about people, places, or facts.{" "}
+          <a
+            href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes"
+            target="_blank"
+            rel="noreferrer"
+            className="underline"
+          >
+            ChatGPT May 24 Version
+          </a>
+        </span>
+      </form>
     </div>
-}
+  );
+};
 export default FloatingInputComponent;
