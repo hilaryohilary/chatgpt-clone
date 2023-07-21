@@ -1,9 +1,12 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './loginComponent.css'
 import Link from 'next/link';
 import ThirdPartyAuthComponents from './ThirdPartyAuthComponents';
 import EmailInput from './EmailInput';
+import { useRouter } from 'next/navigation';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../firebase';
 
 type loginComponentProps = {
 
@@ -14,7 +17,15 @@ const LoginComponent: React.FC<loginComponentProps> = () => {
     const handleShowThirdPartyComponent = (value:boolean) => {
         setThirdParty(value);
     }
+const [userCredentials] = useAuthState(auth);
+const router = useRouter();
 
+useEffect(() => {
+  if (userCredentials) {
+    router.push("/");
+    }
+}, [userCredentials, router]);
+    
     return (
         <div className='h-full w-full overflow-y-scroll no-scrollbar'>
             <header>
@@ -27,9 +38,9 @@ const LoginComponent: React.FC<loginComponentProps> = () => {
             <div className='flex flex-col justify-center wrap items-center pt-20 gap-2'>
                      <h1 className=' font-[600] text-[32px] mt-14 pb-5'>Welcome back</h1>
             
-                <EmailInput showThirdPartyComponent={handleShowThirdPartyComponent} />
+                <EmailInput showThirdPartyComponent={handleShowThirdPartyComponent} isLogin={true} />
 
-                <div className=' text-sm text-text-dark mt-3'>Don&apos,t have an account?<a href='/auth/signup' className='mx-1.5 text-green'>Sign up</a></div>
+                <div className=' text-sm text-text-dark mt-3'>Don&apos;t have an account?<a href='/auth/signup' className='mx-1.5 text-green'>Sign up</a></div>
                 {
                     thirdParty ? (
                     <>

@@ -19,7 +19,7 @@ const SignUpComponent: React.FC<SignUpComponentProps> = () => {
     return <div className='flex flex-col justify-center wrap items-center pt-20 gap-2'>
         <h1 className=' font-[600] text-[32px] mt-8'>Create your account</h1 >
         <p className='w-80 text-center text-[14px] mb-2' > Note that phone verification may be required for signup.Your number will only be used to verify your identity for security purposes.</p >
-        <EmailInput showThirdPartyComponent={handleShowThirdParty}/>
+        <EmailInput showThirdPartyComponent={ handleShowThirdParty } isLogin={ false } />
         
         <div className=' text-sm text-text-dark mt-3'>Already have an account?<a href='/auth/login' className='mx-1.5 text-green'>Login</a></div>
         {

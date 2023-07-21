@@ -1,19 +1,23 @@
 import React from "react";
 import Image from "next/image";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../firebase";
 
 type ChatSessionsProps = {
   sideBarOpened: boolean;
 };
 
 const ChatSessions: React.FC<ChatSessionsProps> = ({ sideBarOpened }) => {
+  const [userCredentials] = useAuthState(auth);
+
   return (
     <div
       className={`${
         sideBarOpened ? "md:pl-[250px]" : ""
-      } even:bg-gray-900 text-gray-700 font-[400] m-0`}
+      } text-gray-700 font-[400] m-0`}
     >
-      <div className="px-2 flex justify-between even:bg-gray-900 items-start p-4 gap-4 text-base md:gap-6 md:max-w-2xl lg:max-w-[38rem] xl:max-w-3xl md:py-6 lg:px-0 m-auto">
-        <h1 className="text-white py-1 rounded px-3 bg-gray-700">H</h1>
+      <div className="px-2 flex justify-between items-start p-4 gap-4 text-base md:gap-6 md:max-w-2xl lg:max-w-[38rem] xl:max-w-3xl md:py-6 lg:px-0 m-auto">
+              <h1 className="text-white py-1 rounded px-3 bg-gray-700">{ userCredentials?.displayName?.charAt(0)}</h1>
         <div className="w-full ">
           <p>
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Minus,

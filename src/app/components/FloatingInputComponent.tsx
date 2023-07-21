@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoSend } from "react-icons/io5";
 import { BsStop } from "react-icons/bs";
 import { BiRefresh } from "react-icons/bi";
@@ -10,6 +10,7 @@ type FloatingInputComponentProps = {
 const FloatingInputComponent: React.FC<FloatingInputComponentProps> = ({
   sideBarOpened,
 }) => {
+
   const [inputPresent, setinputPresent] = useState(false);
   const handleInputPrompt = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     e.target.value ? setinputPresent(true) : setinputPresent(false);
@@ -31,7 +32,7 @@ const FloatingInputComponent: React.FC<FloatingInputComponentProps> = ({
         />
         <span>Regenerate response</span>
       </button> */}
-      <form className="flex flex-col w-full py-[10px] flex-grow md:py-4 md:pl-4 relative border border-black/10 bg-white dark:border-gray-900/50 dark:text-white dark:bg-gray-700 rounded-xl shadow-xs dark:shadow-xs px-2">
+      <form className="flex flex-col w-full py-[10px] flex-grow md:py-4 md:pl-4 relative border border-black/10 md:border-0 bg-white dark:border-gray-900/50 dark:text-white dark:bg-gray-700 rounded-xl shadow-xs dark:shadow-xs px-2">
         <div
           className="relative flex h-full flex-1 items-stretch md:flex-col"
           role="presentation"

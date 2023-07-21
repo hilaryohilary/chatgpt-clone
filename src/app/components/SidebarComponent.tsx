@@ -5,17 +5,25 @@ import { IoMdClose } from 'react-icons/io';
 import { IoMenuOutline, IoAdd, IoPersonOutline } from 'react-icons/io5';
 import { LiaEllipsisHSolid } from 'react-icons/lia';
 import Image from 'next/image';
+import { auth } from "../firebase";
+import { useAuthState } from 'react-firebase-hooks/auth';
+
+
 type SidebarComponentProps = {
     onSideBarOpen: (value: boolean) => void;
 };
 
+
 const SidebarComponent:React.FC<SidebarComponentProps> = ({onSideBarOpen}) => {
     const [openMobileSidebar, setOpenMobileSidebar] = useState(false);
     const [openSidebar, setOpenSidebar] = useState(true);
-    onSideBarOpen(openSidebar);
+  onSideBarOpen(openSidebar);
+  
+  const [userCredentials] = useAuthState(auth);
+
 
     
-    return (
+  return (
       <>
         <nav className="md:hidden bg-gray-900 text-gray-light flex justify-between p-2 items-center">
           <IoMenuOutline
@@ -25,7 +33,7 @@ const SidebarComponent:React.FC<SidebarComponentProps> = ({onSideBarOpen}) => {
             }}
             className="cursor-pointer"
           />
-          <h1 className="text-center font-normal">New Chat</h1>
+        <h1 className="text-center font-normal">{ userCredentials?.displayName?.charAt(0)}</h1>
           <IoAdd size={24} onClick={() => {}} className="cursor-pointer" />
         </nav>
         <nav
@@ -89,9 +97,17 @@ const SidebarComponent:React.FC<SidebarComponentProps> = ({onSideBarOpen}) => {
               href=""
               className="flex flex-row items-center py-3 px-3 gap-3 relative rounded-md hover:bg-[#2A2B32] cursor-pointer break-all hover:pr-4 text-sm group"
             >
-              <h3 className="py-1 px-2 rounded bg-gray-700">H</h3>
+              {userCredentials?.photoURL === null ||
+              userCredentials?.photoURL === undefined ? (
+                <h3 className="py-1 px-2 rounded bg-gray-700">
+                  {userCredentials?.displayName?.charAt(0)}
+                </h3>
+              ) : (
+                <Image src={userCredentials.photoURL} alt="" width={28} height={28} />
+              )}
+
               <div className="flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative">
-                Hilary Ogochukwu
+                {userCredentials?.displayName}
               </div>
               <LiaEllipsisHSolid size={16} />
             </a>
@@ -115,7 +131,9 @@ const SidebarComponent:React.FC<SidebarComponentProps> = ({onSideBarOpen}) => {
         )}
         <button
           onClick={() => setOpenSidebar(!openSidebar)}
-          className={`hidden ${!openSidebar ? 'md:block': ''} fixed mt-2 ml-2 p-3 rounded border border-black/20 hover:bg-gray-lightest duration-200 cursor-pointer group`}
+          className={`hidden ${
+            !openSidebar ? "md:block" : ""
+          } fixed mt-2 ml-2 p-3 rounded border border-black/20 hover:bg-gray-lightest duration-200 cursor-pointer group`}
         >
           <Image src="/window-dark.svg" alt="menu" height={16} width={16} />
         </button>
