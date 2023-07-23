@@ -72,10 +72,10 @@ const ChatSuggestions:React.FC<ChatSuggestionsProps> = ({openSideBar}) => {
                 <svg
                   stroke="currentColor"
                   fill="none"
-                  stroke-width="1.5"
+                  strokeWidth="1.5"
                   viewBox="0 0 24 24"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   className="h-6 w-6"
                   height="1em"
                   width="1em"

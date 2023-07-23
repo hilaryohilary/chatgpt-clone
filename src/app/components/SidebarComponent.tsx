@@ -33,7 +33,7 @@ const SidebarComponent:React.FC<SidebarComponentProps> = ({onSideBarOpen}) => {
             }}
             className="cursor-pointer"
           />
-        <h1 className="text-center font-normal">{ userCredentials?.displayName?.charAt(0)}</h1>
+        <h1 className="text-center font-normal">New Chat</h1>
           <IoAdd size={24} onClick={() => {}} className="cursor-pointer" />
         </nav>
         <nav

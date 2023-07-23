@@ -184,7 +184,7 @@ const EmailInput: React.FC<EmailInputProps> = ({
                                isvalid === true
                                  ? "focus:border-green"
                                  : "focus:border-error border-error"
-                             } text-gray-500 bg-white`}
+                             } text-gray-500 bg-white outline-none`}
               required
             />
             <label
@@ -206,7 +206,7 @@ const EmailInput: React.FC<EmailInputProps> = ({
               type="text"
               name="email"
               id="email"
-              className="p-3 rounded border-[1px] w-80 text-gray-500"
+              className="p-3 rounded border-[1px] w-80 text-gray-500 outline-none"
               placeholder={email}
               readOnly
             />
@@ -244,14 +244,9 @@ const EmailInput: React.FC<EmailInputProps> = ({
                                isFullNameValid
                                  ? "focus:border-green"
                                  : "focus:border-error border-error text-error"
-                             } text-gray-500 bg-white mb-2`}
+                             } text-gray-500 bg-white mb-2 outline-none`}
                 required
               />
-              {/* {!isFullNameValid && (
-              <div className="text-error text-[12px] flex flex-row items-center  gap-2">
-                <BiSolidErrorCircle size={16} /> Please input your full name
-              </div>
-            )} */}
             </div>
           )}
           <div className="input-container mt-2 pt-2 group-[:nth-of-type(4)]:hover:border-green">
@@ -264,7 +259,7 @@ const EmailInput: React.FC<EmailInputProps> = ({
                              text-gray-500
                              focus:border-green
                              ${wrongCredentials ? "border-error" : ""}
-                             `}
+                             outline-none`}
               required
             />
             <div
