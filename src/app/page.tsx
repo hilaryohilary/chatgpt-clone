@@ -17,7 +17,9 @@ export default function Home() {
   const [responseLoading, setResponseLoading] = useState(false);
   const [chatSessions, setChatSessions] = useState<
     Array<{ role: String; content: String }>
-  >([]);
+    >([]);
+  
+  const [id, setId] = useState('');
 
   const handleSidebarOpen = (value: boolean) => {
     setopenSideBar(value);
@@ -31,28 +33,43 @@ export default function Home() {
       { role: "user", content: value },
     ]);
     setResponseLoading(true);
-      const response = await chatWithAi(
-        value,
-        chatSessions
-      );
-    if (!response) return;
-      setChatSessions((prevChatSessions) => [
-       ...prevChatSessions,
-       { role: "assistant", content: response.responseText },
-     ]);
-    setResponseLoading(response.responseLoading);
-    console.log(response.responseLoading);
-    
-    
+    const response = await chatWithAi(value, chatSessions);
+    if (!response) {
+      setResponseLoading(false);
+      return;
+    }
+    setChatSessions((prevChatSessions) => [
+      ...prevChatSessions,
+      { role: "assistant", content: response.responseText },
+    ]);
+    setId(response.chatId);
+    console.log(id);
 
-     
+    setResponseLoading(response.responseLoading);
   };
 
   useEffect(() => {
-    if (userCredentials === null || userCredentials === undefined) {
-      router.push("/");
+    console.log(userCredentials, !userCredentials);
+    if (userCredentials) {
+      if (chatSessions.length !== 0) {
+        const today = new Date().toLocaleDateString();
+        const storedData = localStorage.getItem("chat-history");
+        const dataArray = storedData ? JSON.parse(storedData) : [];
+        const IndexToUpdate = dataArray.findIndex(
+          (obj: any) => obj.date === today
+        );
+        if (IndexToUpdate !== -1) {
+          dataArray[IndexToUpdate] = { date: today, chatSessions, id };
+        } else {
+          dataArray.push({ date: today, chatSessions, id });
+        }
+
+        localStorage.setItem("chat-history", JSON.stringify(dataArray));
+      }
+      return;
     }
-  }, [userCredentials, router]);
+    router.push("/auth");
+  }, [userCredentials, router, chatSessions, id]);
 
   return (
     <div className="">

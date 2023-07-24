@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
+import { BsThreeDots } from "react-icons/bs";
 
 type ChatSessionsProps = {
   sideBarOpened: boolean;
@@ -33,7 +34,7 @@ const ChatSessions: React.FC<ChatSessionsProps> = ({
         >
           <div
             className={`
-            }px-2 flex justify-between items-start p-4 gap-4 text-base md:gap-6 md:max-w-2xl lg:max-w-[38rem] xl:max-w-3xl md:py-6 lg:px-0 m-auto`}
+            px-2 flex justify-between items-start p-4 gap-4 text-base md:gap-6 md:max-w-2xl lg:max-w-[38rem] xl:max-w-3xl md:py-6 lg:px-0 m-auto`}
           >
             {chat.role === "user" ? (
               <h1 className="text-white py-1 rounded px-3 bg-gray-700">
@@ -51,17 +52,30 @@ const ChatSessions: React.FC<ChatSessionsProps> = ({
 
             <div className={`w-full p-1`}>
               <p>{chat.content}</p>
-              {onResponseLoading &&
-                chat.role !== "user" &&
-                chatSession[chatSession.length] === undefined && (
-                  <span className="w-1 text-sm bg-gray-700 animate-ping">
-                    ..
-                  </span>
-                )}
             </div>
           </div>
         </div>
       ))}
+
+      {onResponseLoading && (
+        <div className=" bg-gray-50">
+          <div
+            className="
+            px-2 flex justify-between items-start p-4 gap-4 text-base md:gap-6 md:max-w-2xl lg:max-w-[38rem] xl:max-w-3xl md:py-6 lg:px-0 m-auto mt-[-140px]  "
+          >
+            <Image
+              src="gpt.svg"
+              alt=""
+              width={35}
+              height={35}
+              className="bg-[#19C37D] p-1 rounded text-white"
+            />
+            <div className="w-full p-1">
+              <BsThreeDots className="animate-pulse" />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
