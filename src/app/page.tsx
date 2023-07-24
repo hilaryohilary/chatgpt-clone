@@ -11,7 +11,6 @@ import { chatWithAi } from "./api/chat";
 
 export default function Home() {
   const [openSideBar, setopenSideBar] = useState(false);
-  const router = useRouter();
   const [userCredentials] = useAuthState(auth);
   const [userPrompt, setUserPrompt] = useState("");
   const [responseLoading, setResponseLoading] = useState(false);
@@ -20,6 +19,8 @@ export default function Home() {
     >([]);
   
   const [id, setId] = useState('');
+  const router = useRouter();
+
 
   const handleSidebarOpen = (value: boolean) => {
     setopenSideBar(value);
@@ -49,7 +50,6 @@ export default function Home() {
   };
 
   useEffect(() => {
-    console.log(userCredentials, !userCredentials);
     if (userCredentials) {
       if (chatSessions.length !== 0) {
         const today = new Date().toLocaleDateString();
@@ -65,10 +65,12 @@ export default function Home() {
         }
 
         localStorage.setItem("chat-history", JSON.stringify(dataArray));
+
+        
       }
       return;
     }
-    router.push("/auth");
+    // router.push("/auth");
   }, [userCredentials, router, chatSessions, id]);
 
   return (
