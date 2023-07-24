@@ -1,39 +1,57 @@
-import React, { useEffect, useState } from 'react';
-import { BsPlus } from 'react-icons/bs';
-import { FiMessageSquare } from 'react-icons/fi';
-import { IoMdClose } from 'react-icons/io';
-import { BiLogOut } from 'react-icons/bi';
-import { IoMenuOutline, IoAdd, IoPersonOutline } from 'react-icons/io5';
-import { LiaEllipsisHSolid } from 'react-icons/lia';
-import Image from 'next/image';
+import React, { useEffect, useState } from "react";
+import { BsPlus } from "react-icons/bs";
+import { FiMessageSquare } from "react-icons/fi";
+import { IoMdClose } from "react-icons/io";
+import { BiLogOut } from "react-icons/bi";
+import { PiSpinner } from "react-icons/pi";
+import { IoMenuOutline, IoAdd, IoPersonOutline } from "react-icons/io5";
+import { LiaEllipsisHSolid } from "react-icons/lia";
+import Image from "next/image";
 import { auth } from "../firebase";
-import { useAuthState } from 'react-firebase-hooks/auth';
+import { useAuthState } from "react-firebase-hooks/auth";
 import { useSignOut } from "react-firebase-hooks/auth";
-
+import {
+  groupByDateCategory,
+  chatHistory,
+  sortByDate,
+} from "../helperFunctions/groupByDateCategory";
 
 type SidebarComponentProps = {
-    onSideBarOpen: (value: boolean) => void;
+  onSideBarOpen: (value: boolean) => void;
 };
 
-
-const SidebarComponent:React.FC<SidebarComponentProps> = ({onSideBarOpen}) => {
-    const [openMobileSidebar, setOpenMobileSidebar] = useState(false);
+const SidebarComponent: React.FC<SidebarComponentProps> = ({
+  onSideBarOpen,
+}) => {
+  const [openMobileSidebar, setOpenMobileSidebar] = useState(false);
   const [openSidebar, setOpenSidebar] = useState(true);
   const [signOut, loading, error] = useSignOut(auth);
-  
-  
-  const [userCredentials] = useAuthState(auth);
 
-  const handleLogOut = async() => {
+  const [userCredentials] = useAuthState(auth);
+  const prevChatHistory = localStorage.getItem("chat-history");
+  const [loadingChats, setloadingChats] = useState(true);
+
+  const [sortedandGroupedChatData, setSortedAndGroupedChatData] = useState<{
+    [key: string]: chatHistory[];
+  }>({});
+
+  const handleLogOut = async () => {
     await signOut();
-  }
+  };
 
   useEffect(() => {
     onSideBarOpen(openSidebar);
-  }, [onSideBarOpen, openSidebar]);
-  
+    const parsedprevChatHistory = prevChatHistory
+      ? JSON.parse(prevChatHistory)
+      : [];
+    const sortedChat = sortByDate(parsedprevChatHistory);
+    const groupedChat = groupByDateCategory(sortedChat);
+    setSortedAndGroupedChatData(groupedChat);
+    setTimeout(() => {
+    setloadingChats(false);
+    }, 2000);
+  }, [onSideBarOpen, openSidebar, prevChatHistory, loadingChats]);
 
-    
   return (
     <>
       <nav className="md:hidden bg-gray-900 text-gray-light flex justify-between p-2 items-center">
@@ -55,7 +73,10 @@ const SidebarComponent:React.FC<SidebarComponentProps> = ({onSideBarOpen}) => {
         } duration-300`}
       >
         <div className="flex flex-row items-center text-center justify-between left-0 right-0">
-          <a className="border-white/20 border p-2 w-full md:w-[180px] gap-2 text-sm rounded-md flex flex-row items-center cursor-pointer duration-200 hover:bg-background-focus-dark">
+          <a
+            className="border-white/20 border p-2 w-full md:w-[180px] gap-2 text-sm rounded-md flex flex-row items-center cursor-pointer duration-200 hover:bg-background-focus-dark"
+            href="/"
+          >
             <BsPlus size={16} /> <span>New Chat</span>
           </a>
 
@@ -67,27 +88,42 @@ const SidebarComponent:React.FC<SidebarComponentProps> = ({onSideBarOpen}) => {
           </button>
         </div>
 
-        <div className="relative">
-          <div className="sticky top-0 z-[16]">
-            <h3 className=" h-9 pb-2 pt-3 px-3 text-xs text-gray-500 font-medium text-ellipsis overflow-hidden break-all bg-gray-900">
-              Yesterday
-            </h3>
+        {loadingChats
+          ? <div className="flex justify-center items-center h-full">
+            <div className="text-center">
+              <PiSpinner size={26} className="animate-spin"/>
+            </div>
           </div>
-          <ol>
-            <li className="relative z-[15]">
-              <a
-                href=""
-                className="flex flex-row items-center py-3 px-3 gap-3 relative rounded-md hover:bg-[#2A2B32] cursor-pointer break-all hover:pr-4 text-sm"
-              >
-                <FiMessageSquare size={18} />
-                <div className="flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative">
-                  Best React UI Libraries libraryy outcome
-                  <div className="absolute inset-y-0 right-0 w-8 z-10 bg-gradient-to-l from-gray-900 group-hover:from-[#2A2B32]"></div>
+          : Object.entries(sortedandGroupedChatData).map(
+              ([category, items]) => (
+                <div key={category} className="relative">
+                  <div className="sticky top-0 z-[16]">
+                    <h3 className=" h-9 pb-2 pt-3 px-3 text-xs text-gray-500 font-medium text-ellipsis overflow-hidden break-all bg-gray-900">
+                      {category}
+                    </h3>
+                  </div>
+                  <ol>
+                    {items.map((item, index) => (
+                      <li key={index} className="relative z-[15]">
+                        <a
+                          href={`/${item.id}`}
+                          className="flex flex-row items-center py-3 px-3 gap-3 relative rounded-md hover:bg-[#2A2B32] cursor-pointer break-all hover:pr-4 text-sm"
+                        >
+                          <FiMessageSquare size={18} />
+                          <div className="flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative">
+                            {`User Prompt: ${item.chatSessions[0].content.slice(
+                              0,
+                              20
+                            )}`}
+                            <div className="absolute inset-y-0 right-0 w-8 z-10 bg-gradient-to-l from-gray-900 group-hover:from-[#2A2B32]"></div>
+                          </div>
+                        </a>
+                      </li>
+                    ))}
+                  </ol>
                 </div>
-              </a>
-            </li>
-          </ol>
-        </div>
+              )
+            )}
         <div className="absolute bottom-0 flex flex-col border-t-[1px] border-gray-500 left-0 right-0">
           <a
             href=""
@@ -163,5 +199,5 @@ const SidebarComponent:React.FC<SidebarComponentProps> = ({onSideBarOpen}) => {
       </button>
     </>
   );
-}
+};
 export default SidebarComponent;

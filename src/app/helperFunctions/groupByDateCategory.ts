@@ -1,10 +1,15 @@
 // Function to group data by date categories
- interface chatHistory {
+  interface chatHistory {
     date: Date,
     chatSessions: Array<{ role: String; content: String }>,
     id: String;
     
 }
+
+const sortByDate = (data: chatHistory[]): chatHistory[] => {
+    return data.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+}
+
 const groupByDateCategory = (data: chatHistory[]): { [key: string]: chatHistory[] } => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -49,3 +54,6 @@ const groupByDateCategory = (data: chatHistory[]): { [key: string]: chatHistory[
     return grouped;
   }, {});
 };
+
+export { groupByDateCategory, sortByDate };
+export type { chatHistory };

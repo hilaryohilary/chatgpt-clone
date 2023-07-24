@@ -26,8 +26,6 @@ const Page:React.FC<pageProps> = () => {
     const [id, setId] = useState("");
     
     const prevChatHistory = localStorage.getItem('chat-history');
-    const parsedprevChatHistory = prevChatHistory ? JSON.parse(prevChatHistory) : [];
-    console.log(parsedprevChatHistory);
     
 
      const handleSidebarOpen = (value: boolean) => {
@@ -57,18 +55,20 @@ const Page:React.FC<pageProps> = () => {
      };
 
     useEffect(() => {
+         const parsedprevChatHistory = prevChatHistory
+           ? JSON.parse(prevChatHistory)
+           : [];
       parsedprevChatHistory
         .filter((chat: any) => chatId === chat.id)
         .map((chat: any) => {
           if (chat) {
-            console.log(chat["chatSessions"]);
             setChatSessions((prevChatSessions) => [
               ...prevChatSessions,
               ...chat["chatSessions"],
             ]);
           }
         });
-    }, [chatId, parsedprevChatHistory])
+    }, [chatId, prevChatHistory])
     
      return (
        <div className="">
