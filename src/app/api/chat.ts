@@ -42,7 +42,8 @@ try {
         for (const parsedLine of parsedLines) {
           const { choices, id } = parsedLine;
           const { delta } = choices[0];
-            const { content } = delta;
+          const { content } = delta;
+          console.log(content);
           if (content) {
               responseText += content;
                 chatId = id;

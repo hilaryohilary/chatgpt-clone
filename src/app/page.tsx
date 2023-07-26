@@ -15,11 +15,12 @@ export default function Home() {
   const [userPrompt, setUserPrompt] = useState("");
   const [responseLoading, setResponseLoading] = useState(false);
   const [chatSessions, setChatSessions] = useState<
-    Array<{ role: String; content: String }>
+    Array<{ role: string; content: string }>
     >([]);
   
   const [id, setId] = useState('');
   const router = useRouter();
+  const [response, setResponse] = useState('');
 
 
   const handleSidebarOpen = (value: boolean) => {
@@ -39,42 +40,52 @@ export default function Home() {
       setResponseLoading(false);
       return;
     }
+      setId(response.chatId);
+
+      const today = new Date().toLocaleDateString();
+      const storedData = localStorage.getItem("chat-history");
+      const dataArray = storedData ? JSON.parse(storedData) : [];
+      const IndexToUpdate = dataArray.findIndex(
+        (obj: any) => obj.date === today
+      );
+      const updatedChatSessions = [
+        ...(IndexToUpdate !== -1 ? dataArray[IndexToUpdate].chatSessions : []),
+        {role: "user", content: value},
+        {role: "assistant", content: response.responseText}
+      ];
+      const updatedData = {
+        date: today,
+        chatSessions: updatedChatSessions,
+        id,
+      };
+
+      if (IndexToUpdate !== -1) {
+        dataArray[IndexToUpdate] = updatedData;
+      } else {
+        dataArray.push(updatedData);
+      }
+
+      localStorage.setItem("chat-history", JSON.stringify(dataArray));
     setChatSessions((prevChatSessions) => [
       ...prevChatSessions,
       { role: "assistant", content: response.responseText },
     ]);
-    setId(response.chatId);
-    console.log(id);
+    
+    setResponse(response.responseText);
 
     setResponseLoading(response.responseLoading);
   };
 
   useEffect(() => {
     if (userCredentials) {
-      if (chatSessions.length !== 0) {
-        const today = new Date().toLocaleDateString();
-        const storedData = localStorage.getItem("chat-history");
-        const dataArray = storedData ? JSON.parse(storedData) : [];
-        const IndexToUpdate = dataArray.findIndex(
-          (obj: any) => obj.date === today
-        );
-        if (IndexToUpdate !== -1) {
-          dataArray[IndexToUpdate] = { date: today, chatSessions, id };
-        } else {
-          dataArray.push({ date: today, chatSessions, id });
-        }
-
-        localStorage.setItem("chat-history", JSON.stringify(dataArray));
-
-        
-      }
+      
       return;
     }
     // router.push("/auth");
-  }, [userCredentials, router, chatSessions, id]);
+  }, [userCredentials, router, chatSessions, id, response, userPrompt]);
 
   return (
-    <div className="">
+    <div className="dark:bg-gray-800 h-screen overflow-y-auto">
       <SidebarComponent onSideBarOpen={handleSidebarOpen} />
 
       {userPrompt ? (

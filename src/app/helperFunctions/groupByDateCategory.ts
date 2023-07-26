@@ -1,8 +1,8 @@
 // Function to group data by date categories
   interface chatHistory {
-    date: Date,
-    chatSessions: Array<{ role: String; content: String }>,
-    id: String;
+    date: string,
+    chatSessions: Array<{ role: string; content: string }>,
+    id: string;
     
 }
 

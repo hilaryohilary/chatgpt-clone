@@ -48,10 +48,18 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
     const groupedChat = groupByDateCategory(sortedChat);
     setSortedAndGroupedChatData(groupedChat);
     setTimeout(() => {
-    setloadingChats(false);
+      setloadingChats(false);
     }, 2000);
   }, [onSideBarOpen, openSidebar, prevChatHistory, loadingChats]);
 
+  // console.log(sortedandGroupedChatData);
+  // const zzz = Object.entries(sortedandGroupedChatData).map(
+  //   ([category, items]) =>
+  //     items
+  //       .filter((item) => item.id !== "")
+  //       .map((item) => console.log(item.chatSessions[0]))
+  // );
+  // console.log(zzz);
   return (
     <>
       <nav className="md:hidden bg-gray-900 text-gray-light flex justify-between p-2 items-center">
@@ -88,42 +96,51 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
           </button>
         </div>
 
-        {loadingChats
-          ? <div className="flex justify-center items-center h-full">
+        {loadingChats ? (
+          <div className="flex justify-center items-center h-full">
             <div className="text-center">
-              <PiSpinner size={26} className="animate-spin"/>
+              <PiSpinner size={26} className="animate-spin" />
             </div>
           </div>
-          : Object.entries(sortedandGroupedChatData).map(
-              ([category, items]) => (
-                <div key={category} className="relative">
-                  <div className="sticky top-0 z-[16]">
-                    <h3 className=" h-9 pb-2 pt-3 px-3 text-xs text-gray-500 font-medium text-ellipsis overflow-hidden break-all bg-gray-900">
-                      {category}
-                    </h3>
-                  </div>
-                  <ol>
-                    {items.map((item, index) => (
-                      <li key={index} className="relative z-[15]">
+        ) : (
+          Object.entries(sortedandGroupedChatData).map(([category, items]) => (
+            <div key={category} className="relative">
+              <div className="sticky top-0 z-[16]">
+                <h3 className=" h-9 pb-2 pt-3 px-3 text-xs text-gray-500 font-medium text-ellipsis overflow-hidden break-all bg-gray-900">
+                  {category}
+                </h3>
+              </div>
+              <ol>
+                {items
+                  .filter((item) => item.id !== "")
+                  .map((item, index) => (
+                    <li key={index} className="relative z-[15]">
+                      {item.chatSessions[0] !== undefined ? (
                         <a
                           href={`/${item.id}`}
                           className="flex flex-row items-center py-3 px-3 gap-3 relative rounded-md hover:bg-[#2A2B32] cursor-pointer break-all hover:pr-4 text-sm"
                         >
                           <FiMessageSquare size={18} />
+
                           <div className="flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative">
-                            {`User Prompt: ${item.chatSessions[0].content.slice(
-                              0,
-                              20
-                            )}`}
+                            {item.chatSessions[0] !== undefined
+                              ? `User Prompt: ${item.chatSessions[0].content.slice(
+                                  0,
+                                  20
+                                )}`
+                              : ""}
                             <div className="absolute inset-y-0 right-0 w-8 z-10 bg-gradient-to-l from-gray-900 group-hover:from-[#2A2B32]"></div>
                           </div>
                         </a>
-                      </li>
-                    ))}
-                  </ol>
-                </div>
-              )
-            )}
+                      ) : (
+                        ""
+                      )}
+                    </li>
+                  ))}
+              </ol>
+            </div>
+          ))
+        )}
         <div className="absolute bottom-0 flex flex-col border-t-[1px] border-gray-500 left-0 right-0">
           <a
             href=""
@@ -187,7 +204,12 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
         />
       </div>
       {openMobileSidebar && (
-        <div className="md:hidden absolute top-0 right-0 left-0 bottom-0 bg-black opacity-70 z-10"></div>
+        <div
+          className="md:hidden absolute top-0 right-0 left-0 bottom-0 bg-black opacity-70 z-10"
+          onClick={() => {
+            setOpenMobileSidebar(false);
+          }}
+        ></div>
       )}
       <button
         onClick={() => setOpenSidebar(!openSidebar)}
