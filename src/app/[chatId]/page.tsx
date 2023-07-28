@@ -42,7 +42,6 @@ function Page() {
     const storedData = localStorage.getItem("chat-history");
     const dataArray = storedData ? JSON.parse(storedData) : [];
     const IndexToUpdate = dataArray.findIndex((obj: any) => obj.id === chatId);
-    console.log(IndexToUpdate);
 
     const updatedHistory = [
       ...prevChat[0].chatSessions,

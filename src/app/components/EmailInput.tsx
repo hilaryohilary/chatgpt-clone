@@ -129,7 +129,6 @@ const EmailInput: React.FC<EmailInputProps> = ({
       setisFullNameValid(false);
       return;
     }
-    console.log(fullname);
     isLogin ? await handleLoginWithEmail() : await handleSignUpWithEmail();
   };
 
@@ -148,7 +147,6 @@ const EmailInput: React.FC<EmailInputProps> = ({
           theme: "colored",
           autoClose: 3000,
         });
-        console.log(createUserError.code);
       }
     }
     if (error) {
@@ -315,9 +313,6 @@ const EmailInput: React.FC<EmailInputProps> = ({
             AuthenticateUser();
           }}
           type="submit"
-          onSubmit={() => {
-            console.log("submited");
-          }}
           className="relative mt-6 w-80 rounded bg-green bg-opacity-90 p-3.5 text-white outline-none duration-300 hover:bg-opacity-100"
         >
           Continue

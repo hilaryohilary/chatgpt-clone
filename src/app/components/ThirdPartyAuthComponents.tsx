@@ -17,7 +17,6 @@ const ThirdPartyAuthComponents: React.FC<
   const handleSignInWithGoogle = async () => {
     try {
       const user = await signInWithGoogle();
-      console.log(user);
       if (!user) return;
       router.push("/");
     } catch (error) {
