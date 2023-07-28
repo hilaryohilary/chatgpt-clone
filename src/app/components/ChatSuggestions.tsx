@@ -6,11 +6,12 @@ type ChatSuggestionsProps = {
 };
 
 const ChatSuggestions: React.FC<ChatSuggestionsProps> = ({ openSideBar }) => {
+  console.log(openSideBar);
   return (
     <div
       className={`${
-        openSideBar ? "md:pl-[250px]" : "md:pl-0"
-      } relative flex w-full flex-col justify-center text-sm dark:bg-gray-800 `}
+        openSideBar ? "md:pl-[250px]" : ""
+      } relative flex w-full flex-col justify-center text-sm dark:bg-gray-800`}
     >
       <div className="md:mx-w-2xl mx-auto w-full px-6 text-gray-800 dark:text-gray-100 md:flex md:h-full md:flex-col lg:max-w-3xl">
         <h1 className="mb-10 ml-auto mr-auto mt-6 flex items-center justify-center gap-2 text-center text-4xl font-semibold sm:mb-16 sm:mt-[10vh]">

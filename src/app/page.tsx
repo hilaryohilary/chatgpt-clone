@@ -90,7 +90,7 @@ import { useHasMounted } from "./hooks/useHasMounted";
           onResponseLoading={responseLoading}
         />
       ) : (
-        <ChatSuggestions openSideBar />
+        <ChatSuggestions openSideBar={openSideBar} />
       )}
 
       <FloatingInputComponent

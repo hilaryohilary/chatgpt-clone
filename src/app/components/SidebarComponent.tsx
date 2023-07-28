@@ -89,7 +89,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
           </a>
 
           <button
-            onClick={() => setOpenSidebar(!openSidebar)}
+            onClick={() => setOpenSidebar(false)}
             className="hidden rounded border border-white/20 p-2.5 duration-200  hover:bg-background-focus-dark md:block"
           >
             <Image src="/window.svg" alt="menu" height={16} width={16} />
@@ -211,12 +211,12 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
       )}
       <button
         onClick={() => setOpenSidebar(!openSidebar)}
-        className={`hidden ${
+        className={` ${
           !openSidebar ? "md:block" : ""
-        } group fixed ml-2 mt-2 cursor-pointer rounded border border-black/20 p-3 duration-200 hover:bg-gray-500 dark:border-gray-100`}
+        }fixed ml-2 mt-2 cursor-pointer rounded border border-black/20 p-3 duration-200 hover:bg-gray-500 dark:border-gray-100`}
       >
         <Image
-          className="dark:hidden"
+          className="dark:hidden block"
           src="/window-dark.svg"
           alt="menu"
           height={16}
