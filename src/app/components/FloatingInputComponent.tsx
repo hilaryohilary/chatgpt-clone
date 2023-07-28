@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoSend } from "react-icons/io5";
 import { BsStop } from "react-icons/bs";
 import { BiDotsHorizontal } from "react-icons/bi";
@@ -26,7 +26,6 @@ const FloatingInputComponent: React.FC<FloatingInputComponentProps> = ({
     }
   };
 
-
   const handleSubmitPrompt = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (userPrompt === null || userPrompt === "") return;
@@ -53,10 +52,10 @@ const FloatingInputComponent: React.FC<FloatingInputComponentProps> = ({
     <div
       className={`fixed ${
         sideBarOpened ? "md:pl-[250px]" : ""
-      } bottom-0 text-dark w-screen dark:transparent`}
+      } text-dark dark:transparent bottom-0 w-screen`}
     >
       {onResponseLoading && (
-        <button className=" hidden p-2 border border-black/10 rounded mx-auto md:flex items-center mb-2 text-gray-700 dark:text-gray-100 gap-2 group text-sm hover:bg-gray-lightest dark:hover:text-gray-800">
+        <button className=" group mx-auto mb-2 hidden items-center gap-2 rounded border border-black/10 p-2 text-sm text-gray-700 hover:bg-gray-lightest dark:text-gray-100 dark:hover:text-gray-800 md:flex">
           <BsStop size={16} className=" animate-spin" />
           <span>Stop generating</span>
         </button>
@@ -70,26 +69,28 @@ const FloatingInputComponent: React.FC<FloatingInputComponentProps> = ({
         <span>Regenerate response</span>
       </button> */}
       <form
-        className="flex flex-col w-full py-[10px] flex-grow md:py-4 md:pl-4 relative border border-black/10 md:border-0 bg-white dark:border-gray-900/50 dark:text-white dark:bg-gray-700 rounded-xl shadow-xs dark:shadow-xs px-2 bg-gradient-to-b from-transparent to-bg-white dark:from-gray-700/10 dark:to-gray-700"
+        className="shadow-xs dark:shadow-xs to-bg-white relative flex w-full flex-grow flex-col rounded-xl border border-black/10 bg-white bg-gradient-to-b from-transparent px-2 py-[10px] dark:border-gray-900/50 dark:bg-gray-700 dark:from-gray-700/10 dark:to-gray-700 dark:text-white md:border-0 md:py-4 md:pl-4"
         onSubmit={handleSubmitPrompt}
       >
         <div
           className="relative flex h-full flex-1 items-stretch md:flex-col"
           role="presentation"
         >
-          <div className="flex flex-col w-full py-[10px] md:py-4 md:pl-4 relative border border-black/10 bg-white dark:border-gray-900/50 dark:text-white dark:bg-gray-700 rounded-xl shadow-xs dark:shadow-xs md:w-4/5 mx-auto">
+          <div className="shadow-xs dark:shadow-xs relative mx-auto flex w-full flex-col rounded-xl border border-black/10 bg-white py-[10px] dark:border-gray-900/50 dark:bg-gray-700 dark:text-white md:w-4/5 md:py-4 md:pl-4">
             <textarea
               onChange={handleInputPrompt}
-              tabIndex={0}
+              tabIndex={ 0 }
               placeholder="Send a message"
-              className="m-0 w-full resize-none outline-none border-0 bg-transparent p-0 pr-10 focus:ring-0 focus-visible:ring-0 dark:bg-transparent md:pr-12 pl-3 md:pl-0 h-6 overflow-y-hidden max-h-[200px] "
-              value={userPrompt}
+              className="m-0 h-6 max-h-[200px] w-full resize-none overflow-y-hidden border-0 bg-transparent p-0 pl-3 pr-10 outline-none focus:ring-0 focus-visible:ring-0 dark:bg-transparent md:pl-0 md:pr-12 "
+              value={ userPrompt }
+              rows={ 5 }
+              cols={5}
               autoFocus={true}
             ></textarea>
             {onResponseLoading ? (
               <button
-                className={`absolute rounded-md md:bottom-3 p-1 md:p-1 md:right-3 dark:hover:bg-gray-900 dark:disabled:hover:bg-transparent right-2 disabled:text-gray-400 text-white enabled:bg-brand-purple bottom-1.5 transition-colors disabled:opacity-40 
-                }`}
+                className={`enabled:bg-brand-purple } absolute bottom-1.5 right-2 rounded-md p-1 text-white transition-colors disabled:text-gray-400 disabled:opacity-40 dark:hover:bg-gray-900 dark:disabled:hover:bg-transparent md:bottom-3 md:right-3 
+                md:p-1`}
                 disabled={true}
               >
                 <span className="">
@@ -98,7 +99,7 @@ const FloatingInputComponent: React.FC<FloatingInputComponentProps> = ({
               </button>
             ) : (
               <button
-                className={`absolute rounded-md md:bottom-3 p-1 md:p-1 md:right-3 dark:hover:bg-gray-900 dark:disabled:hover:bg-transparent right-2 disabled:text-gray-400 enabled:bg-brand-purple text-white bottom-1.5 transition-colors disabled:opacity-40 ${
+                className={`enabled:bg-brand-purple absolute bottom-1.5 right-2 rounded-md p-1 text-white transition-colors disabled:text-gray-400 disabled:opacity-40 dark:hover:bg-gray-900 dark:disabled:hover:bg-transparent md:bottom-3 md:right-3 md:p-1 ${
                   inputPresent ? "bg-[#19C37D]" : ""
                 }`}
                 disabled={!inputPresent}
@@ -110,7 +111,7 @@ const FloatingInputComponent: React.FC<FloatingInputComponentProps> = ({
             )}
           </div>
         </div>
-        <span className="mx-auto mt-2 text-[12px] text-gray-900 text-center dark:text-gray-100">
+        <span className="mx-auto mt-2 text-center text-[12px] text-gray-900 dark:text-gray-100">
           Free Research Preview. ChatGPT may produce inaccurate information
           about people, places, or facts.{" "}
           <a

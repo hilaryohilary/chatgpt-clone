@@ -1,6 +1,5 @@
 "use client"
 import Link from "next/link";
-import { useHasMounted } from "../hooks/useHasMounted";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -21,9 +20,6 @@ const Page: React.FC<pageProps> = () => {
         router.push("/");
       }
     }, [userCredentials, router]);
-
-    const hasMounted = useHasMounted();
-    if (!hasMounted) return null;
     
     return <div className = 'w-full h-[100vh]'>
             <div className = "flex h-full w-full flex-col items-center justify-center bg-gray-50 dark:bg-gray-800 dark:text-gray-100"><div className = "w-96 flex flex-col flex-auto justify-center items-center"><div className = "mb-5">

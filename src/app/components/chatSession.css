@@ -1,0 +1,12 @@
+code {
+    display: block;
+    background-color:#1e1e1e;
+    color: white;
+    font-family: monospace;
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 4px;
+    margin:20px auto;
+    position: relative;
+    overflow-x: scroll;
+}

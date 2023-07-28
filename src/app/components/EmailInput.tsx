@@ -43,7 +43,6 @@ const EmailInput: React.FC<EmailInputProps> = ({
 
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
-  const [userCredentials] = useAuthState(auth);
   const [updateProfile, updating, profilError] = useUpdateProfile(auth);
 
   const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -105,9 +104,9 @@ const EmailInput: React.FC<EmailInputProps> = ({
     try {
       const newUser = await createUserWithEmailAndPassword(email, password!);
 
-        if (!newUser) return;
+      if (!newUser) return;
+       await updateProfile({ displayName: fullname });
       router.push("/");
-      const displayName = await updateProfile({ displayName: fullname });
     } catch (error: any) {
       console.log(error);
     }
@@ -120,7 +119,7 @@ const EmailInput: React.FC<EmailInputProps> = ({
       password === null
     )
       return;
-    if (!isFullNameValid || fullname === "" && isLogin === false) {
+    if (!isFullNameValid || (fullname === "" && isLogin === false)) {
       toast.error("Please fill in your full name", {
         theme: "colored",
         hideProgressBar: true,
@@ -179,12 +178,12 @@ const EmailInput: React.FC<EmailInputProps> = ({
               type="email"
               name="email"
               id="email"
-              className={`p-3 rounded border w-80
+              className={`w-80 rounded border p-3
                              ${
                                isvalid === true
                                  ? "focus:border-green"
-                                 : "focus:border-error border-error"
-                             } text-gray-500 bg-white outline-none`}
+                                 : "border-error focus:border-error"
+                             } bg-white text-gray-500 outline-none`}
               required
             />
             <label
@@ -206,13 +205,13 @@ const EmailInput: React.FC<EmailInputProps> = ({
               type="text"
               name="email"
               id="email"
-              className="p-3 rounded border-[1px] w-80 text-gray-500 outline-none"
+              className="w-80 rounded border-[1px] p-3 text-gray-500 outline-none"
               placeholder={email}
               readOnly
             />
             <div className="cursor-pointer duration-200">
               <Link
-                className="text-green text-[16px] rounded p-1 curson-pointer hover:bg-gray-lightest absolute right-2 top-2.5"
+                className="curson-pointer absolute right-2 top-2.5 rounded p-1 text-[16px] text-green hover:bg-gray-lightest"
                 href="/auth"
               >
                 Edit
@@ -222,7 +221,7 @@ const EmailInput: React.FC<EmailInputProps> = ({
         )}
 
         {!isvalid && (
-          <div className="text-error text-[12px] flex flex-row items-center gap-2 mt-1">
+          <div className="mt-1 flex flex-row items-center gap-2 text-[12px] text-error">
             <BiSolidErrorCircle size={16} /> Email is not valid
           </div>
         )}
@@ -239,12 +238,12 @@ const EmailInput: React.FC<EmailInputProps> = ({
                 id="fullname"
                 minLength={3}
                 placeholder="Full Name"
-                className={`p-3 rounded border w-80
+                className={`w-80 rounded border p-3
                              ${
                                isFullNameValid
                                  ? "focus:border-green"
-                                 : "focus:border-error border-error text-error"
-                             } text-gray-500 bg-white mb-2 outline-none`}
+                                 : "border-error text-error focus:border-error"
+                             } mb-2 bg-white text-gray-500 outline-none`}
                 required
               />
             </div>
@@ -255,7 +254,7 @@ const EmailInput: React.FC<EmailInputProps> = ({
               type={showPassword ? "text" : "password"}
               name="password"
               id="password"
-              className={`p-3 rounded border-[1px] w-80
+              className={`w-80 rounded border-[1px] p-3
                              text-gray-500
                              focus:border-green
                              ${wrongCredentials ? "border-error" : ""}
@@ -264,7 +263,7 @@ const EmailInput: React.FC<EmailInputProps> = ({
             />
             <div
               onClick={() => setShowPassword(!showPassword)}
-              className="show cursor-pointer rounded-r hover:bg-gray-light active:bg-teal-100 duration-300 px-3.5 py-3.5 w-11 absolute right-[0px] top-[9px] "
+              className="show absolute right-[0px] top-[9px] w-11 cursor-pointer rounded-r px-3.5 py-3.5 duration-300 hover:bg-gray-light active:bg-teal-100 "
             >
               {showPassword ? (
                 <BiShow size={20} className="text-gray-500" />
@@ -289,7 +288,7 @@ const EmailInput: React.FC<EmailInputProps> = ({
             </label>
 
             {isLogin && wrongCredentials && (
-              <div className="text-error text-[12px] flex flex-row items-center gap-2 mt-1">
+              <div className="mt-1 flex flex-row items-center gap-2 text-[12px] text-error">
                 <BiSolidErrorCircle size={16} /> Wrong Email or Password
               </div>
             )}
@@ -297,12 +296,12 @@ const EmailInput: React.FC<EmailInputProps> = ({
         </>
       )}
       {password !== null && password !== "" && wrongCredentials !== true && (
-        <div className=" p-3 w-80 mt-2 border-gray-mid rounded border-[1px]">
-          <p className="text-gray-600 pb-1">Your password must contain: </p>
+        <div className=" mt-2 w-80 rounded border-[1px] border-gray-mid p-3">
+          <p className="pb-1 text-gray-600">Your password must contain: </p>
           <div
             className={`${
               (password.length as number) >= 8 ? "text-green" : "text-gray-600"
-            } flex flex-row gap-2 items-center`}
+            } flex flex-row items-center gap-2`}
           >
             {password.length < 8 ? <BsDot /> : <GiCheckMark size={15} />}
             <p>Atleast 8 characters</p>
@@ -319,7 +318,7 @@ const EmailInput: React.FC<EmailInputProps> = ({
           onSubmit={() => {
             console.log("submited");
           }}
-          className="relative rounded bg-opacity-90 w-80 outline-none bg-green p-3.5 mt-6 text-white hover:bg-opacity-100 duration-300"
+          className="relative mt-6 w-80 rounded bg-green bg-opacity-90 p-3.5 text-white outline-none duration-300 hover:bg-opacity-100"
         >
           Continue
         </button>

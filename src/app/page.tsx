@@ -1,17 +1,18 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import SidebarComponent from "./components/SidebarComponent";
 import FloatingInputComponent from "./components/FloatingInputComponent";
 import ChatSuggestions from "./components/ChatSuggestions";
 import ChatSessions from "./components/ChatSessions";
-import { useRouter } from "next/navigation";
 import { auth } from "./firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { chatWithAi } from "./api/chat";
+import withAuth from "./hoc/withAuth";
+import { useHasMounted } from "./hooks/useHasMounted";
 
-export default function Home() {
+
+ function Home() {
   const [openSideBar, setopenSideBar] = useState(false);
-  const [userCredentials] = useAuthState(auth);
   const [userPrompt, setUserPrompt] = useState("");
   const [responseLoading, setResponseLoading] = useState(false);
   const [chatSessions, setChatSessions] = useState<
@@ -19,8 +20,6 @@ export default function Home() {
     >([]);
   
   const [id, setId] = useState('');
-  const router = useRouter();
-  const [response, setResponse] = useState('');
 
 
   const handleSidebarOpen = (value: boolean) => {
@@ -71,18 +70,14 @@ export default function Home() {
       { role: "assistant", content: response.responseText },
     ]);
     
-    setResponse(response.responseText);
-
     setResponseLoading(response.responseLoading);
   };
 
-  useEffect(() => {
-    if (userCredentials) {
-      
-      return;
-    }
-    // router.push("/auth");
-  }, [userCredentials, router, chatSessions, id, response, userPrompt]);
+   const hasMounted = useHasMounted();
+
+   if (!hasMounted) {
+     return null;
+   }
 
   return (
     <div className="dark:bg-gray-800 h-screen overflow-y-auto">
@@ -106,3 +101,4 @@ export default function Home() {
     </div>
   );
 }
+export default withAuth(Home);

@@ -25,10 +25,10 @@ const analytics = async () => {
 const auth = getAuth(app);
 const firestore = getFirestore(app);
 
-if (typeof window !== undefined) {
-  if (["localhost", "127.0.0.1"].includes(window.location.hostname)) {
-    connectAuthEmulator(auth, "http://localhost:9099");
-  }
-}
+// if (typeof window !== undefined) {
+//   if (["localhost", "127.0.0.1"].includes(window.location.hostname)) {
+//     connectAuthEmulator(auth, "http://localhost:9099");
+//   }
+// }
 
 export { auth, firestore, app, analytics };

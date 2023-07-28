@@ -6,9 +6,7 @@ import { BsThreeDots } from "react-icons/bs";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
-
-
-
+import "./chatSession.css";
 
 type ChatSessionsProps = {
   sideBarOpened: boolean;
@@ -23,14 +21,25 @@ const ChatSessions: React.FC<ChatSessionsProps> = ({
 }) => {
   const [userCredentials] = useAuthState(auth);
 
-  console.log(chatSession);
+  function wrapInPreWithBackTicks(str: string) {
+    const regex = /```([^`]*)```/g;
+    const formattedDiv = str
+      .replace(regex, "<CodeBlock value={$1}/>")
+      .replace(/\n/g, "<br/>");
+    return <div dangerouslySetInnerHTML={{ __html: formattedDiv }} />;
+  }
+  function formatString(inputString) {
+    const formattedString = inputString.replace(/\. (\*|\d+\.) /g, "<br/>");
+
+    return <div dangerouslySetInnerHTML={{__html: formattedString}}/>;
+  }
 
 
   return (
     <div
       className={`${
         sideBarOpened ? "md:pl-[250px]" : ""
-      } text-gray-800 font-[400] m-0 dark:text-gray-100 dark:bg-gray-800`}
+      } m-0 font-[400] text-gray-800 dark:bg-gray-800 dark:text-gray-100`}
     >
       {chatSession.map((chat, index) => (
         <div
@@ -38,17 +47,17 @@ const ChatSessions: React.FC<ChatSessionsProps> = ({
           className={`border-b border-black/10 ${
             chat.role === "user"
               ? ""
-              : "bg-gray-50 dark:bg-gray-700 text-gray-100"
+              : "bg-gray-50 text-gray-100 dark:bg-gray-700"
           } ${
             chat === chatSession[chatSession.length - 1] ? "mb-[140px]" : ""
           }`}
         >
           <div
             className={`
-            px-2 flex justify-between items-start p-4 gap-4 text-base md:gap-6 md:max-w-2xl lg:max-w-[38rem] xl:max-w-3xl md:py-6 lg:px-0 m-auto`}
+            m-auto flex items-start justify-between gap-4 p-4 px-2 text-base md:max-w-2xl md:gap-6 md:py-6 lg:max-w-[38rem] lg:px-0 xl:max-w-3xl`}
           >
             {chat.role === "user" ? (
-              <h1 className="text-white py-1 rounded px-3 bg-gray-700">
+              <h1 className="rounded bg-gray-700 px-3 py-1 text-white">
                 {userCredentials?.displayName?.charAt(0)}
               </h1>
             ) : (
@@ -57,14 +66,22 @@ const ChatSessions: React.FC<ChatSessionsProps> = ({
                 alt=""
                 width={35}
                 height={35}
-                className="bg-[#19C37D] p-1 rounded text-white"
+                className="rounded bg-[#19C37D] p-1 text-white"
               />
             )}
 
             <div className={`w-full p-1`}>
-                <ReactMarkdown remarkPlugins={[gfm]} rehypePlugins={[rehypeRaw,]}>
+              {chat.content.toString().includes("```") ? (
+                <ReactMarkdown
+                  remarkPlugins={[gfm]}
+                  rehypePlugins={[rehypeRaw]}
+                  className="md:max-w-2xl max-w-[80vw] overflow-x-hidden lg:max-w-[38rem] xl:max-w-3xl overflow-x"
+                >
                   {chat.content}
                 </ReactMarkdown>
+              ) : (
+                  formatString(chat.content)
+              )}
             </div>
           </div>
         </div>
@@ -74,14 +91,14 @@ const ChatSessions: React.FC<ChatSessionsProps> = ({
         <div className=" bg-gray-50 dark:bg-gray-700">
           <div
             className="
-            px-2 flex justify-between items-start p-4 gap-4 text-base md:gap-6 md:max-w-2xl lg:max-w-[38rem] mb-[200px] xl:max-w-3xl md:py-6 lg:px-0 m-auto mt-[-140px] "
+            m-auto mb-[200px] mt-[-140px] flex items-start justify-between gap-4 p-4 px-2 text-base md:max-w-2xl md:gap-6 md:py-6 lg:max-w-[38rem] lg:px-0 xl:max-w-3xl "
           >
             <Image
               src="gpt.svg"
               alt=""
               width={35}
               height={35}
-              className="bg-[#19C37D] p-1 rounded text-white"
+              className="rounded bg-[#19C37D] p-1 text-white"
             />
             <div className="w-full p-1">
               <BsThreeDots className="animate-pulse" />

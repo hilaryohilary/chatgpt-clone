@@ -62,7 +62,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
   // console.log(zzz);
   return (
     <>
-      <nav className="md:hidden bg-gray-900 text-gray-light flex justify-between p-2 items-center">
+      <nav className="flex items-center justify-between bg-gray-900 p-2 text-gray-light md:hidden">
         <IoMenuOutline
           size={24}
           onClick={() => {
@@ -74,15 +74,15 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
         <IoAdd size={24} onClick={() => {}} className="cursor-pointer" />
       </nav>
       <nav
-        className={`fixed top-0 right-0 left-0 bottom-0 h-screen overflow-y-auto md:w-[250px] w-[320px] bg-gray-900 p-2 text-white transition ease-in-out z-20 ${
+        className={`fixed bottom-0 left-0 right-0 top-0 z-20 h-screen w-[320px] overflow-y-auto bg-gray-900 p-2 text-white transition ease-in-out md:w-[250px] ${
           openSidebar ? "md:translate-x-0" : "md:translate-x-[-250px]"
         } ${
           openMobileSidebar === true ? "translate-x-0" : "translate-x-[-320px]"
         } duration-300`}
       >
-        <div className="flex flex-row items-center text-center justify-between left-0 right-0">
+        <div className="left-0 right-0 flex flex-row items-center justify-between text-center">
           <a
-            className="border-white/20 border p-2 w-full md:w-[180px] gap-2 text-sm rounded-md flex flex-row items-center cursor-pointer duration-200 hover:bg-background-focus-dark"
+            className="flex w-full cursor-pointer flex-row items-center gap-2 rounded-md border border-white/20 p-2 text-sm duration-200 hover:bg-background-focus-dark md:w-[180px]"
             href="/"
           >
             <BsPlus size={16} /> <span>New Chat</span>
@@ -90,23 +90,21 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
 
           <button
             onClick={() => setOpenSidebar(!openSidebar)}
-            className="hidden md:block p-2.5 rounded border border-white/20  hover:bg-background-focus-dark duration-200"
+            className="hidden rounded border border-white/20 p-2.5 duration-200  hover:bg-background-focus-dark md:block"
           >
             <Image src="/window.svg" alt="menu" height={16} width={16} />
           </button>
         </div>
 
         {loadingChats ? (
-          <div className="flex justify-center items-center h-full">
-            <div className="text-center">
-              <PiSpinner size={26} className="animate-spin" />
-            </div>
+          <div className="flex h-20 items-center justify-center">
+              <PiSpinner size={20} className="animate-spin" />
           </div>
         ) : (
           Object.entries(sortedandGroupedChatData).map(([category, items]) => (
             <div key={category} className="relative">
               <div className="sticky top-0 z-[16]">
-                <h3 className=" h-9 pb-2 pt-3 px-3 text-xs text-gray-500 font-medium text-ellipsis overflow-hidden break-all bg-gray-900">
+                <h3 className=" h-9 overflow-hidden text-ellipsis break-all bg-gray-900 px-3 pb-2 pt-3 text-xs font-medium text-gray-500">
                   {category}
                 </h3>
               </div>
@@ -118,18 +116,18 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
                       {item.chatSessions[0] !== undefined ? (
                         <a
                           href={`/${item.id}`}
-                          className="flex flex-row items-center py-3 px-3 gap-3 relative rounded-md hover:bg-[#2A2B32] cursor-pointer break-all hover:pr-4 text-sm"
+                          className="relative flex cursor-pointer flex-row items-center gap-3 break-all rounded-md px-3 py-3 text-sm hover:bg-[#2A2B32] hover:pr-4"
                         >
                           <FiMessageSquare size={18} />
 
-                          <div className="flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative">
+                          <div className="relative max-h-5 flex-1 overflow-hidden text-ellipsis break-all">
                             {item.chatSessions[0] !== undefined
                               ? `User Prompt: ${item.chatSessions[0].content.slice(
                                   0,
                                   20
                                 )}`
                               : ""}
-                            <div className="absolute inset-y-0 right-0 w-8 z-10 bg-gradient-to-l from-gray-900 group-hover:from-[#2A2B32]"></div>
+                            <div className="absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-gray-900 group-hover:from-[#2A2B32]"></div>
                           </div>
                         </a>
                       ) : (
@@ -141,37 +139,37 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
             </div>
           ))
         )}
-        <div className="absolute bottom-0 flex flex-col border-t-[1px] border-gray-500 left-0 right-0">
+        <div className="absolute bottom-0 left-0 right-0 flex flex-col border-t-[1px] border-gray-500">
           <a
             href=""
-            className="flex flex-row items-center py-3 px-3 gap-3 relative rounded-md hover:bg-[#2A2B32] cursor-pointer break-all hover:pr-4 text-sm mt-2"
+            className="relative mt-2 flex cursor-pointer flex-row items-center gap-3 break-all rounded-md px-3 py-3 text-sm hover:bg-[#2A2B32] hover:pr-4"
           >
             <IoPersonOutline size={16} />
-            <div className="flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative">
+            <div className="relative max-h-5 flex-1 overflow-hidden text-ellipsis break-all">
               Upgrade to Plus
             </div>
-            <span className=" rounded-md bg-orange-300 text-black p-1">
+            <span className=" rounded-md bg-orange-300 p-1 text-black">
               NEW
             </span>
           </a>
           <a
             href="#"
-            className="flex flex-row items-center py-3 px-3 gap-3 relative rounded-md hover:bg-[#2A2B32] cursor-pointer break-all hover:pr-4 text-sm mt-2"
+            className="relative mt-2 flex cursor-pointer flex-row items-center gap-3 break-all rounded-md px-3 py-3 text-sm hover:bg-[#2A2B32] hover:pr-4"
             onClick={handleLogOut}
           >
             <BiLogOut size={16} />
-            <div className="flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative">
+            <div className="relative max-h-5 flex-1 overflow-hidden text-ellipsis break-all">
               Log Out
             </div>
           </a>
 
           <a
             href=""
-            className="flex flex-row items-center py-3 px-3 gap-3 relative rounded-md hover:bg-[#2A2B32] cursor-pointer break-all hover:pr-4 text-sm group"
+            className="group relative flex cursor-pointer flex-row items-center gap-3 break-all rounded-md px-3 py-3 text-sm hover:bg-[#2A2B32] hover:pr-4"
           >
             {userCredentials?.photoURL === null ||
             userCredentials?.photoURL === undefined ? (
-              <h3 className="py-1 px-2 rounded bg-gray-700">
+              <h3 className="rounded bg-gray-700 px-2 py-1">
                 {userCredentials?.displayName?.charAt(0)}
               </h3>
             ) : (
@@ -183,7 +181,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
               />
             )}
 
-            <div className="flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative">
+            <div className="relative max-h-5 flex-1 overflow-hidden text-ellipsis break-all">
               {userCredentials?.displayName}
             </div>
             <LiaEllipsisHSolid size={16} />
@@ -191,7 +189,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
         </div>
       </nav>
       <div
-        className={`md:hidden cursor-pointer border-2 z-20 text-gray-lightest border-gray-lightest absolute left-[320px] top-0 p-1 m-2 ${
+        className={`absolute left-[320px] top-0 z-20 m-2 cursor-pointer border-2 border-gray-lightest p-1 text-gray-lightest md:hidden ${
           openMobileSidebar ? "" : "hidden"
         }`}
       >
@@ -205,7 +203,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
       </div>
       {openMobileSidebar && (
         <div
-          className="md:hidden absolute top-0 right-0 left-0 bottom-0 bg-black opacity-70 z-10"
+          className="absolute bottom-0 left-0 right-0 top-0 z-10 bg-black opacity-70 md:hidden"
           onClick={() => {
             setOpenMobileSidebar(false);
           }}
@@ -215,9 +213,22 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
         onClick={() => setOpenSidebar(!openSidebar)}
         className={`hidden ${
           !openSidebar ? "md:block" : ""
-        } fixed mt-2 ml-2 p-3 rounded border border-black/20 hover:bg-gray-lightest duration-200 cursor-pointer group`}
+        } group fixed ml-2 mt-2 cursor-pointer rounded border border-black/20 p-3 duration-200 hover:bg-gray-500 dark:border-gray-100`}
       >
-        <Image src="/window-dark.svg" alt="menu" height={16} width={16} />
+        <Image
+          className="dark:hidden"
+          src="/window-dark.svg"
+          alt="menu"
+          height={16}
+          width={16}
+        />
+        <Image
+          className="hidden dark:block"
+          src="/window.svg"
+          alt="menu"
+          height={16}
+          width={16}
+        />
       </button>
     </>
   );
