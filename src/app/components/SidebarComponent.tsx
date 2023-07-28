@@ -211,7 +211,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
       )}
       <button
         onClick={() => setOpenSidebar(!openSidebar)}
-        className={`nidden ${
+        className={`hidden ${
           !openSidebar ? "md:block" : ""
         }fixed ml-2 mt-2 cursor-pointer rounded border border-black/20 p-3 duration-200 hover:bg-gray-500 dark:border-gray-100`}
       >
