@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 
 export async function chatWithAi(value: string, chatSessions: Array<{ role: String; content: String }>) {
 try {
-  const url = 'http://localhost:3000/api/chats';
+  const url = 'https://chatgpt-clone-v1.vercel.app/api/chats';
   const data = [...chatSessions, {role: "user", content: value}]
 
   
