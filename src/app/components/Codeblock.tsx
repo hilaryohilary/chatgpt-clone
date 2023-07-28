@@ -15,7 +15,7 @@ import cpp from "react-syntax-highlighter/dist/cjs/languages/prism/cpp"
 import javascript from "react-syntax-highlighter/dist/cjs/languages/prism/javascript";
 
 
-import { monokaiSublime } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import { dark } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 SyntaxHighlighter.registerLanguage("javascript", javascript);
 SyntaxHighlighter.registerLanguage("typescript", typescript);
@@ -36,7 +36,7 @@ type CodeProps = {
 const CodeBlock:React.FC<CodeProps> = ({ children}) => {
   
   return (
-    <SyntaxHighlighter style={monokaiSublime}  language="javascript" wrapLines={true}>
+    <SyntaxHighlighter style={dark}  language="javascript" wrapLines={true}>
       {children}
     </SyntaxHighlighter>
   );
