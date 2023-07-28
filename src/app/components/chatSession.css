@@ -1,12 +1,68 @@
-code {
+
+.chats ol  {
     display: block;
-    background-color:#1e1e1e;
-    color: white;
-    font-family: monospace;
-    font-size: 14px;
-    padding: 10px;
-    border-radius: 4px;
-    margin:20px auto;
-    position: relative;
-    overflow-x: scroll;
+    list-style: decimal;
+    margin-left: 0;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    list-style-position: inside;
+}
+
+.chats ul {
+    list-style-type: circle;
+    margin-left: 0;
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+
+.chats li {
+    padding: 0.75rem;
+}
+
+table {
+    margin: 6px auto;
+    border: 1px solid;
+}
+
+table th {
+    background-color: #ECECF133;
+    text-align: left;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-top-width: 1px;
+    padding: 0.25rem 0.75rem;
+}
+
+table td {
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    padding: 0.25rem 0.75rem;
+}
+
+@media (prefer-color-scheme: dark) {
+    table {
+        border-color: 1px solid #d7d7d7;
+    }
+
+    table th {
+           border-color: #d7d7d7;
+    }
+
+    table td {
+        border-color: #d7d7d7;
+    }
+}
+
+@media (prefer-color-scheme: light) {
+    table {
+        border-color: #1e1e1e;
+    }
+
+    table th {
+        border-color: #1e1e1e;
+    }
+
+    table td {
+        border-color: #1e1e1e;
+    }
 }

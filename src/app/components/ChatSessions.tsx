@@ -7,6 +7,7 @@ import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import "./chatSession.css";
+import CodeBlock from "./Codeblock";
 
 type ChatSessionsProps = {
   sideBarOpened: boolean;
@@ -21,19 +22,17 @@ const ChatSessions: React.FC<ChatSessionsProps> = ({
 }) => {
   const [userCredentials] = useAuthState(auth);
 
-  function wrapInPreWithBackTicks(str: string) {
-    const regex = /```([^`]*)```/g;
-    const formattedDiv = str
-      .replace(regex, "<CodeBlock value={$1}/>")
-      .replace(/\n/g, "<br/>");
-    return <div dangerouslySetInnerHTML={{ __html: formattedDiv }} />;
-  }
   function formatString(inputString) {
-    const formattedString = inputString.replace(/\. (\*|\d+\.) /g, "<br/>");
+    const formattedString = inputString.replace(/\. (\*|\d+\.) /g, "$1<br>");
 
-    return <div dangerouslySetInnerHTML={{__html: formattedString}}/>;
+    return <div dangerouslySetInnerHTML={{ __html: formattedString }} />;
   }
 
+  function shouldDisplayAsMarkdown(inputString) {
+    const markdownRegex =
+      /^#{1,6}\s|\n(?:\s{0,4}[*+-]\s|\s{0,4}\d+\.\s)|[*_]{1,2}|[`~]{1,3}/;
+    return markdownRegex.test(inputString);
+  }
 
   return (
     <div
@@ -47,7 +46,7 @@ const ChatSessions: React.FC<ChatSessionsProps> = ({
           className={`border-b border-black/10 ${
             chat.role === "user"
               ? ""
-              : "bg-gray-50 text-gray-100 dark:bg-gray-700"
+              : "bg-gray-50 text-sm text-gray-800 dark:text-gray-100 dark:bg-gray-700"
           } ${
             chat === chatSession[chatSession.length - 1] ? "mb-[140px]" : ""
           }`}
@@ -71,17 +70,27 @@ const ChatSessions: React.FC<ChatSessionsProps> = ({
             )}
 
             <div className={`w-full p-1`}>
-              {chat.content.toString().includes("```") ? (
+              {/* {shouldDisplayAsMarkdown(chat.content) ? (
                 <ReactMarkdown
                   remarkPlugins={[gfm]}
                   rehypePlugins={[rehypeRaw]}
-                  className="md:max-w-2xl max-w-[80vw] overflow-x-hidden lg:max-w-[38rem] xl:max-w-3xl overflow-x"
+                  className="overflow-x max-w-[80vw] overflow-x-hidden md:max-w-2xl lg:max-w-[38rem] xl:max-w-3xl"
                 >
                   {chat.content}
                 </ReactMarkdown>
               ) : (
-                  formatString(chat.content)
-              )}
+                formatString(chat.content)
+              )} */}
+              <ReactMarkdown
+                remarkPlugins={[gfm]}
+                rehypePlugins={[rehypeRaw]}
+                components={{
+                  code: CodeBlock,
+                } }
+                className="overflow-x chats max-w-[80vw] list-decimal overflow-x-hidden text-sm md:max-w-2xl lg:max-w-[38rem] xl:max-w-3xl"
+              >
+                {chat.content}
+              </ReactMarkdown>
             </div>
           </div>
         </div>
