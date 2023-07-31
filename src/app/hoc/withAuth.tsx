@@ -10,8 +10,6 @@ export default function withAuth(Component) {
   return function ProtectedRoute() {
     const router = useRouter();
     const userAuthenticated = localStorage.getItem('token');
-
-    const [userCredentials] = useAuthState(auth);
     
     useEffect(() => {
       if (!userAuthenticated) {
