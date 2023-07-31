@@ -70,17 +70,6 @@ const ChatSessions: React.FC<ChatSessionsProps> = ({
             )}
 
             <div className={`w-full p-1`}>
-              {/* {shouldDisplayAsMarkdown(chat.content) ? (
-                <ReactMarkdown
-                  remarkPlugins={[gfm]}
-                  rehypePlugins={[rehypeRaw]}
-                  className="overflow-x max-w-[80vw] overflow-x-hidden md:max-w-2xl lg:max-w-[38rem] xl:max-w-3xl"
-                >
-                  {chat.content}
-                </ReactMarkdown>
-              ) : (
-                formatString(chat.content)
-              )} */}
               <ReactMarkdown
                 remarkPlugins={[gfm]}
                 rehypePlugins={[rehypeRaw]}

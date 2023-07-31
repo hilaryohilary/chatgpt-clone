@@ -13,16 +13,16 @@ import {
 import { auth } from "../firebase";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { NextRequest, NextResponse } from "next/server";
 
 type EmailInputProps = {
   showThirdPartyComponent: (value: boolean) => void;
   isLogin: boolean;
 };
 
-const EmailInput: React.FC<EmailInputProps> = ({
-  showThirdPartyComponent,
-  isLogin,
-}) => {
+const EmailInput: React.FC<EmailInputProps> = (
+  { showThirdPartyComponent, isLogin }
+) => {
   const [email, setEmail] = useState("");
   const [isvalid, setIsvalid] = useState(true);
   const [validity, setValidity] = useState(false);
@@ -76,6 +76,8 @@ const EmailInput: React.FC<EmailInputProps> = ({
     try {
       const user = await signInWithEmailAndPassword(email, password!);
       if (!user) return;
+      const accessToken = await user.user.getIdToken();
+      localStorage.setItem('token', JSON.stringify(accessToken));
       await router.push("/");
     } catch (error) {
       console.log(error);
@@ -103,9 +105,10 @@ const EmailInput: React.FC<EmailInputProps> = ({
   const handleSignUpWithEmail = async () => {
     try {
       const newUser = await createUserWithEmailAndPassword(email, password!);
-
+      const accessToken = await newUser?.user.getIdToken();
       if (!newUser) return;
-       await updateProfile({ displayName: fullname });
+      await updateProfile({ displayName: fullname });
+      localStorage.setItem('token', JSON.stringify(accessToken));
       router.push("/");
     } catch (error: any) {
       console.log(error);

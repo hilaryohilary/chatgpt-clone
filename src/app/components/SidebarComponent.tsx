@@ -36,6 +36,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
   }>({});
 
   const handleLogOut = async () => {
+   localStorage.removeItem('token');
     await signOut();
   };
 

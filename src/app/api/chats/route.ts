@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
     try {
-        const url = "https://api.openai.com/v1/chat/completions";
+        const url = process.env.NEXT_PUBLIC_openAI_COMPLETION_URl!;
         
          const headers = {
         "Content-Type": "application/json",
@@ -27,3 +27,4 @@ export async function POST(req: Request) {
     }
     
 }
+

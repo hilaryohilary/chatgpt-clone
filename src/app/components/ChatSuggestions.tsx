@@ -6,7 +6,6 @@ type ChatSuggestionsProps = {
 };
 
 const ChatSuggestions: React.FC<ChatSuggestionsProps> = ({ openSideBar }) => {
-  console.log(openSideBar);
   return (
     <div
       className={`${

@@ -18,6 +18,8 @@ const ThirdPartyAuthComponents: React.FC<
     try {
       const user = await signInWithGoogle();
       if (!user) return;
+      const accessToken = await user?.user.getIdToken();
+      localStorage.setItem("token", JSON.stringify(accessToken));
       router.push("/");
     } catch (error) {
       console.log(error);

@@ -8,19 +8,15 @@ import { auth } from "../firebase";
 export default function withAuth(Component) {
   return function ProtectedRoute() {
     const router = useRouter();
-    const pathName = usePathname();
-
+    const userAuthenticated = localStorage.getItem('token');
 
     const [userCredentials] = useAuthState(auth);
     
     useEffect(() => {
-
-      if (!userCredentials) {
-          router.replace(`/auth?next=${pathName}`);
-      } else {
-        router.replace(`${pathName}`);
-      }
-    }, [userCredentials, router]);
+      if (!userAuthenticated) {
+          router.push("/auth");
+      } 
+    }, [userAuthenticated, router]);
 
     return <Component/>;
   };

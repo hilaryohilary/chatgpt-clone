@@ -10,12 +10,10 @@ import json from "react-syntax-highlighter/dist/cjs/languages/prism/json";
 import python from "react-syntax-highlighter/dist/cjs/languages/prism/python"
 import c from "react-syntax-highlighter/dist/cjs/languages/prism/c"
 import cpp from "react-syntax-highlighter/dist/cjs/languages/prism/cpp"
-
-
 import javascript from "react-syntax-highlighter/dist/cjs/languages/prism/javascript";
 
 
-import { dark } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import { darcula } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
 SyntaxHighlighter.registerLanguage("javascript", javascript);
 SyntaxHighlighter.registerLanguage("typescript", typescript);
@@ -36,7 +34,7 @@ type CodeProps = {
 const CodeBlock:React.FC<CodeProps> = ({ children}) => {
   
   return (
-    <SyntaxHighlighter style={dark}  language="javascript" wrapLines={true}>
+    <SyntaxHighlighter style={darcula}  language="javascript" wrapLines={true}>
       {children}
     </SyntaxHighlighter>
   );
