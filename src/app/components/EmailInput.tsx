@@ -5,7 +5,6 @@ import { BiHide, BiShow, BiSolidErrorCircle } from "react-icons/bi";
 import { BsDot } from "react-icons/bs";
 import { GiCheckMark } from "react-icons/gi";
 import {
-  useAuthState,
   useCreateUserWithEmailAndPassword,
   useSignInWithEmailAndPassword,
   useUpdateProfile,

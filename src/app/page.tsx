@@ -4,8 +4,6 @@ import SidebarComponent from "./components/SidebarComponent";
 import FloatingInputComponent from "./components/FloatingInputComponent";
 import ChatSuggestions from "./components/ChatSuggestions";
 import ChatSessions from "./components/ChatSessions";
-import { auth } from "./firebase";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { chatWithAi } from "./api/chat";
 import withAuth from "./hoc/withAuth";
 import { useHasMounted } from "./hooks/useHasMounted";
