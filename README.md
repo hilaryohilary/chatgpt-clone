@@ -1,6 +1,6 @@
 # CHAT GPT CLONE
 
-**Let's connect on [Twitter](https://twitter.com/web3_lario)😎 or [LinkedIn](https://www.linkedin.com/in/hilary-ogochukwu-1b139a234/)🚀🚀**
+**Let's connect on [Twitter](https://twitter.com/web3_lario)😎 and [LinkedIn](https://www.linkedin.com/in/hilary-ogochukwu-1b139a234/) 🚀🚀**
 
 ![homepage image](https://github.com/hilaryohilary/chatgpt-clone/blob/master/chatgpt.png)
 
@@ -38,8 +38,9 @@
 
 ## Technology Used
   - **Next.JS**
+  - **Tailwind CSS**
   - **OpenAI API**: Powering the Chatbot with GPT-3.5 language model
-  - 
+    
 ## Contributions
  Contributions are welcome! Feel free to open an issue or submit a pull request
 
