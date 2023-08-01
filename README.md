@@ -39,6 +39,7 @@
 ## Technology Used
   - **Next.JS**
   - **Tailwind CSS**
+  - **Firebase**
   - **OpenAI API**: Powering the Chatbot with GPT-3.5 language model
     
 ## Contributions
