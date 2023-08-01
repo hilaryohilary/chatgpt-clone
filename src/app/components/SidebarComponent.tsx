@@ -15,7 +15,7 @@ import {
   chatHistory,
   sortByDate,
 } from "../helperFunctions/groupByDateCategory";
-
+import { useRouter } from "next/navigation";
 type SidebarComponentProps = {
   onSideBarOpen: (value: boolean) => void;
 };
@@ -35,9 +35,11 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({
     [key: string]: chatHistory[];
   }>({});
 
+  const router = useRouter();
   const handleLogOut = async () => {
    localStorage.removeItem('token');
     await signOut();
+    router.push('/auth');
   };
 
   useEffect(() => {
