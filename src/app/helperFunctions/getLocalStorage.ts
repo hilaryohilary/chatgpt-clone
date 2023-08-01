@@ -15,9 +15,3 @@ export const getInitialChatState = (chatId: string):chatHistory[] => {
         return [newChat];
     }
 }
-
-export const updateChatState = (chatId: string, newChat: chatHistory) =>{
-    const storedChatState = getInitialChatState(chatId);
-    const updatedChatStated = [...storedChatState, newChat];
-    localStorage.setItem('chat-history', JSON.stringify(updatedChatStated));
-}
