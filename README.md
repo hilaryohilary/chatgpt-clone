@@ -10,7 +10,7 @@
 - Remember previous conversation history
 - e.t.c
 
-  ## Getting started
+## Getting started
   ### Prerequisites
 - Node.js and npm should be installed on your machine
 
@@ -29,18 +29,18 @@
   4. Set up the environmental variables
       - Rename `env.local.test` to the `env.local` file
       - Add your OpenAI API Key
-  ### Usage
+## Usage
   1. Start the development server
   ```
   npm run dev
   ```
   2. Visit 'http://localhost:3000' in your browser
 
-  ### Technology Used
+## Technology Used
   - **Next.JS**
   - **OpenAI API**: Powering the Chatbot with GPT-3.5 language model
   - 
- ### Contributions
+## Contributions
  Contributions are welcome! Feel free to open an issue or submit a pull request
 
  
